@@ -7,6 +7,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -260,10 +261,11 @@ public class MiddleTest {
         System.out.println("result = " + result);
 
         //
-        queryFactory.select(member.username)
+        List<String> where = queryFactory.select(member.username)
                 .from(member)
 //                .where(member.username.eq(Expressions.stringTemplate("function('lower', {0})", member.username)));
-                .where(member.username.eq(member.username.lower()));
+                .where(member.username.eq(member.username.lower())).fetch();
+
 
     }
 }
